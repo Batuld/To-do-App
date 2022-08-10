@@ -3,7 +3,7 @@
    <div class="home">
 	<div class="row">
 		<div class="text-center">
-			<h4 class="text-xl bg-red-500 w-auto"> Todo Application</h4>
+			<h4 class="text-xl bg-amber-500 w-auto m-2"> Todo Application</h4>
 		</div>
 	
     <div>
@@ -18,7 +18,11 @@
          </tr>
        </thead>
          <tr v-for="task in tasks" :key="task.name">
-           <td v-text="task.name"  :class='{"text-line-through": task.completed}'>
+          <td><input type="checkbox" @click="setTaskComplete(task)"/></td>
+           <td v-text="task.name"  :class='{"line-through ...": task.completed}'>
+           </td>
+           <td width="10%" class="text-right">
+             <button @click="deleteTask(task)" class="bg-red-500 rounded m-2">Delete</button>
            </td>
          </tr>
      </table>
@@ -41,6 +45,15 @@ export default defineComponent( {
 	},
 mounted() {
    this.tasks = this.$store.state.tasks;
- }
+ },
+  methods: {
+    setTaskComplete(task: Task): void {
+     this.$store.commit("completeTask", task);
+   },
+   deleteTask(task: Task) {
+     this.$store.commit("deleteTask", task);
+   },
+
+ },
 })
 </script>
